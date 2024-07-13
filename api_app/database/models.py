@@ -1,11 +1,9 @@
 from __future__ import annotations
-from typing import List
-from sqlalchemy import ForeignKey
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String
 
 
 class Base(AsyncAttrs, DeclarativeBase):
@@ -13,8 +11,9 @@ class Base(AsyncAttrs, DeclarativeBase):
 
 
 class User(Base):
-    __tablename__ = "user"
+    __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True)
-
-
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    description = Column(String, index=True)
 
