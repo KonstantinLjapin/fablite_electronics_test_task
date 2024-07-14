@@ -11,9 +11,9 @@ class Base(AsyncAttrs, DeclarativeBase):
 
 
 class User(Base):
+    """модель пользователя"""
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True)
     email = Column(String, unique=True, index=True)
     password = Column(String)
-    description = Column(String, index=True)
 

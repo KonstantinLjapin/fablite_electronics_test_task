@@ -1,15 +1,9 @@
 import uvicorn
 import asyncio
-from database.CRUD import user_create, base_create, get_all_users, user_delete
+from database.CRUD import user_create, base_create, get_all_users, user_delete, user_update
 from fastapi import FastAPI, HTTPException
 from api_app.database import schemas
 app = FastAPI()
-
-
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
-
 
 @app.get("/list_user", response_model=list[schemas.UserCreate])
 async def get_list_users():
@@ -19,14 +13,14 @@ async def get_list_users():
 
 @app.post("/create_user")
 async def create_user(user: schemas.UserCreate):
-    # schemas.UserCreate(email="efdcdswfef@f.com", password="qwerty")
     await user_create(user)
-    return {"Hello": "World"}
+    return {"ok": True}
 
 
 @app.put("/update_user")
-async def update_user():
-    return {"Hello": "World"}
+async def update_user(old_user: schemas.UserCreate, new_user: schemas.UserCreate):
+    await user_update(old_user, new_user)
+    return {"ok": True}
 
 
 @app.delete("/delete_user")
